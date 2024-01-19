@@ -1,106 +1,124 @@
-## Blog site using GitHub Pages and Jekyll
-> This site is intended for Students.   This is to record plans, complete hacks, and do work for your learnings.
-- This can be customized to support computer science as you work through pathway (JavaScript, Python/Flask, Java/Spring)
-- All tangible artifact work is in a _posts or in a _notebooks.  
-- Front matter (aka meta data) in ipynb and md files is used to organize information according to week and column in running web site.
+# Flask Portfolio Starter
 
-## GitHub Pages
-All `GitHub Pages` websites are managed on GitHub infrastructure. GitHub uses `Jekyll` to tranform your content into static websites and blogs. Each time we change files in GitHub it initiates a GitHub Action that rebuilds and publishes the site with Jekyll.  
-- GitHub Pages is powered by: [Jekyll](https://jekyllrb.com/).
-- Publised teacher website: [nighthawkcoders.github.io/teacher](https://nighthawkcoders.github.io/teacher/)
+Use this project to create a Flask Servr.
 
-## Preparing a Preview Site 
-In all development, it is recommended to test your code before deployment.  The GitHub Pages development process is optimized by testing your development on your local machine, prior to files on GitHub
+Runtime link: <https://flask.nighthawkcodingsociety.com/>
+GitHub link: https://github.com/nighthawkcoders/flask_portfolio
 
-Development Cycle. For GitHub pages, the tooling described below will create a development cycle  `make-code-save-preview`.  In the development cycle, it is a requirement to preview work locally, prior to doing a VSCode `commit` to git.
+## Conventional way to get started
 
-Deployment Cycle.  In the deplopyment cycle, `sync-github-action-review`, it is a requirement to complete the development cycle prior to doing a VSCode `sync`.  The sync triggers github repository update.  The action starts the jekyll build to publish the website.  Any step can have errors and will require you to do a review.
+> Quick steps that can be used with MacOS, WSL Ubuntu, or Ubuntu; this uses Python 3.9 or later as a prerequisite.
 
-### WSL and/or Ubuntu installation requirements
-- The result of these step is Ubuntu tools to run preview server.  These procedures were created using [jekyllrb.com](https://jekyllrb.com/docs/installation/ubuntu/)
-- Run scripts in scripts directory of student repo: setup_ubuntu.sh and activate.sh. Expected name of the repository to run these scripts is 'student'.
+- Open a Terminal, clone project and cd to project area
 
-### MacOs installation requirements 
-- Ihe result of these step are MacOS tools to run preview server.  These procedures were created using [jekyllrb.com](https://jekyllrb.com/docs/installation/macos/). Run scripts in scripts directory of student repo: setup_macos.sh and activate_macos.sh. Expected name of the repository to run these scripts is 'student'.
-
-### Preview
-- The result of these step is server running on: http://0.0.0.0:4100/teacher/.  Regeneration messages will run in terminal on any save.  Press the Enter or Return key in the terminal at any time to enter commands.
-
-- Complete installation
 ```bash
-bundle install
+mkdir ~/vscode; cd ~/vscode
+
+git clone https://github.com/nighthawkcoders/flask_portfolio.git
+
+cd flask_portfolio
 ```
-- Run Server.  This requires running terminal commands `make`, `make stop`, `make clean`, or `make convert` to manage the running server.  Logging of details will appear in terminal.   A `Makefile` has been created in project to support commands and start processes.
 
-    - Start preview server in terminal
+- Install python dependencies for Flask, etc.
+
+```bash
+pip install -r requirements.txt
+```
+
+- Run from Terminal without VSCode
+
+  - Setup database and init data
+  
+  ```bash
+    ./migrate.sh
+    ```
+
+  - Run python server from command line without VSCode
+
     ```bash
-    cd ~/vscode/teacher  # my project location, adapt as necessary
-    make
+    python main.py
     ```
 
-    - Terminal output of shows server address. Cmd or Ctl click http location to open preview server in browser. Example Server address message... 
-    ```
-    Server address: http://0.0.0.0:4100/teacher/
-    ```
+### Open project in VSCode
 
-    - Save on ipynb or md activiates "regeneration". Refresh browser to see updates. Example terminal message...
-    ```
-    Regenerating: 1 file(s) changed at 2023-07-31 06:54:32
-        _notebooks/2024-01-04-cockpit-setup.ipynb
-    ```
+- Prepare VSCode and run
 
-    - Terminal message are generated from background processes.  Click return or enter to obtain prompt and use terminal as needed for other tasks.  Alway return to root of project `cd ~/vscode/teacher` for all "make" actions. 
-        
+  - From Terminal run VSCode
 
-    - Stop preview server, but leave constructed files in project for your review.
     ```bash
-    make stop
+    code .
     ```
 
-    - Stop server and "clean" constructed files, best choice when renaming files to eliminate potential duplicates in constructed files.
-    ```bash
-    make clean
-    ```
+  - Open Setting: Ctl-Shift P or Cmd-Shift
+    - Search Python: Select Interpreter
+    - Match interpreter to `which python` from terminal
 
-    - Test notebook conversions, best choice to see if IPYNB conversion is acting up.
-    ```bash
-    make convert
-    ```
-### Meta Data (Front Matter)
-- Meta data also known as front matter is a set of key value pairs that can provide additional information to github pages about .md and .ipynb files. This can and probably will be used in other file types (ie doc, pdf), if we added them to the system.
+  - Select main.py and Play button
+  - Try Play button and try to Debug
 
-- In the front matter you can also define things like a title and description for the page.  Additional front matter is defined to place content on "Computer Science Lab Notebook" page.  The `courses:` key will place data on a specific page with the nested `week:` placing data on a specific row on the page.  The `type:` key in front matter will place blog under the plans, hacks(ToDo), and tangibles column. 
+## Idea
 
-- In our files the front matter is defined at the top of the page or the first markdown cell.
+> The purpose of project is to serve APIs.  It is the backend piece of a Full-Stack project.  Review `api` folder in project for endpoints.
 
-    - First open one of the .md or .ipynb files already included in either your _posts folder or your _notebooks folder.
+### Visual thoughts
 
-    - In the .md file you should notice something similar to this at the top of the page. To see this in your .ipynb files you will need to double click the markdown cell at the top of the file.
+> The Starter code should be fun and practical.
 
-    ```yaml
-    ---
-    toc: true
-    comments: false
-    layout: post
-    title: Daily Plan Sample
-    description: Example Blog!!!  This shows planning and notes from hacks.
-    type: plans
-    courses: { compsci: {week: 0} }
-    ---
-    ```
+- Organize with Bootstrap menu
+- Add some color and fun through VANTA Visuals (birds, halo, solar, net)
+- Show some practical and fun links (hrefs) like Twitter, Git, Youtube
+- Build a Sample Page (Table)
+- Show project specific links (hrefs) per page
 
-- Front matter will always have '---' at the top and bottom to distinguish it and each key value pair will be separated by a ':'.
+### Files and Directories in this Project
 
-- Here we can modify things like the title and description.
+These are some of the key files and directories in this project
 
-- The type value will tells us which column this is going to appear under, supported values: `plans`, `hacks`, `tangibles`.
+README.md: This file contains instructions for setting up the necessary tools and cloning the project. A README file is a standard component of all properly set up GitHub projects.
 
-- The courses tells us which menu item it will be under, in this case the `compsci` menu, and the `week` tells it what row (week) it will appear under that menu.
+requirements.txt: This file lists the dependencies required to turn this Python project into a Flask/Python project. It may also include other backend dependencies, such as dependencies for working with a database.
 
-- In our examples,  hacks(ToDo) contains references to our IPYNB files; these are stored in GitHub under the `_notebooks` folder.   The plans and tangibles contains references to our MD files; these are stored in GitHub under the `_posts` folder.
+main.py: This Python source file is used to run the project. Running this file starts a Flask web server locally on localhost. During development, this is the file you use to run, test, and debug the project.
 
-- Key files in Computer Science Lab Notebook
-    - `compsci.md` - this is the "Computer Science Lab Notebook" page and is the link `https://nighthawkcoders.github.io/student/compsci`.  It contains the Title and Number of units on the page.
-    - `_data/compsci.yml` - this contains the supporting data that helps organize the units on the page.
-    - `_layouts`\schedule.html - this contains code, in the Liquid language, that generates the HTML for all the rows and columns.
-    - fyi, the schedule.html could work for another type of page.  For instance, you could make a csa.md, _data/csa.yml, and tag files with `csa: {week: 0}` under courses.
+Dockerfile and docker-compose.yml: These files are used to run and test the project in a Docker container. They allow you to simulate the project’s deployment on a server, such as an AWS EC2 instance. Running these files helps ensure that your tools and dependencies work correctly on different machines.
+
+instances: This directory is the standard location for storing data files that you want to remain on the server. For example, SQLite database files can be stored in this directory. Files stored in this location will persist after web application restart, everyting outside of instances will be recreated at restart.
+
+static: This directory is the standard location for files that you want to be cached by the web server. It is typically used for image files (JPEG, PNG, etc.) or JavaScript files that remain constant during the execution of the web server.
+
+api: This directory contains code that receives and responds to requests from external servers. It serves as the interface between the external world and the logic and code in the rest of the project.
+
+model: This directory contains files that implement the backend functionality for many of the files in the api directory. For example, there may be files in the model directory that directly interact with the database.
+
+templates: This directory contains files and subdirectories used to support the home and error pages of the website.
+
+.gitignore: This file specifies elements to be excluded from version control. Files are excluded when they are derived and not considered part of the project’s original source. In the VSCode Explorer, you may notice some files appearing dimmed, indicating that they are intentionally excluded from version control based on the rules defined in .gitignore.
+
+### Implementation Summary
+
+#### July 2023
+
+> Updates for 2023 to 2024 school year.
+
+- Update README with File Descriptions (anatomy)
+- Add JWT and add security features to data
+- Add migrate.sh to support sqlite schema and data upgrade
+
+#### January 2023
+
+> This project focuses on being a Python backend server.  Intentions are to only have simple UIs an perhaps some Administrative UIs.
+
+#### September 2021
+
+> Basic UI elements were implemented showing server side Flask with Jinja 2 capabilities.
+
+- Project entry point is main.py, this enables Flask Web App and provides capability to renders templates (HTML files)
+- The main.py is the  Web Server Gateway Interface, essentially it contains a HTTP route and HTML file relationship.  The Python code constructs WSGI relationships for index, kangaroos, walruses, and hawkers.
+- The project structure contains many directories and files.  The template directory (containing html files) and static directory (containing js files) are common standards for HTML coding.  Static files can be pictures and videos, in this project they are mostly javascript backgrounds.
+- WSGI templates: index.html, kangaroos.html, ... are aligned with routes in main.py.
+- Other templates support WSGI templates.  The base.html template contains common Head, Style, Body, Script definitions.  WSGI templates often "include" or "extend" these templates.  This is a way to reuse code.
+- The VANTA javascript statics (backgrounds) are shown and defaulted in base.html (birds), but are block replaced as needed in other templates (solar, net, ...)
+- The Bootstrap Navbar code is in navbar.html. The base.html code includes navbar.html.  The WSGI html files extend base.html files.  This is a process of management and correlation to optimize code management.  For instance, if the menu changes discovery of navbar.html is easy, one change reflects on all WSGI html files.
+- Jinja2 variables usage is to isolate data and allow redefinitions of attributes in templates.  Observe "{% set variable = %}" syntax for definition and "{{ variable }}" for reference.
+- The base.html uses combination of Bootstrap grid styling and custom CSS styling.  Grid styling in observe with the "<Col-3>" markers.  A Bootstrap Grid has a width of 12, thus four "Col-3" markers could fit on a Grid row.
+- A key purpose of this project is to embed links to other content.  The "href=" definition embeds hyperlinks into the rendered HTML.  The base.html file shows usage of "href={{github}}", the "{{github}}" is a Jinja2 variable.  Jinja2 variables are pre-processed by Python, a variable swap with value, before being sent to the browser.
