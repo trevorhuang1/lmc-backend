@@ -61,6 +61,15 @@ class UserAPI:
             users = User.query.all()    # read/extract all users from database
             json_ready = [user.read() for user in users]  # prepare output in json
             return jsonify(json_ready)  # jsonify creates Flask response object, more specific to APIs than json.dumps
+        
+        @token_required
+        def delete(self, current_user):
+            body = request.get_json()
+            uid = body.get('uid')
+            user = user.query.get(uid)
+            user.delete()
+            return f"{user.read()} Has been deleted"
+
     
     class _Security(Resource):
         def post(self):
@@ -121,4 +130,3 @@ class UserAPI:
     # building RESTapi endpoint
     api.add_resource(_CRUD, '/')
     api.add_resource(_Security, '/authenticate')
-    
