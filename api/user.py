@@ -66,9 +66,12 @@ class UserAPI:
         def delete(self, current_user):
             body = request.get_json()
             uid = body.get('uid')
-            user = user.query.get(uid)
-            user.delete()
-            return f"{user.read()} Has been deleted"
+            users = User.query.all()
+            for user in users:
+                if user.uid == uid:
+                    user.delete()
+            return jsonify(users.read())
+        
         @token_required
         def put(self):
             body = request.get_json() # get the body of the request
