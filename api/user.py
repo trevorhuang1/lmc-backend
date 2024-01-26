@@ -73,12 +73,19 @@ class UserAPI:
             return jsonify(users.read())
         
         @token_required
-        def put(self):
+        def put(self, current_user):
             body = request.get_json() # get the body of the request
             uid = body.get('uid') # get the UID (Know what to reference)
-            data = body.get('data')
-            user = user.query.get(uid) # get the player (using the uid in this case)
-            user.update(data)
+            dob = body.get('dob')
+            if dob is not None:
+                try:
+                    fdob = datetime.strptime(dob, '%Y-%m-%d').date()
+                except:
+                    return {'message': f'Date of birth format error {dob}, must be mm-dd-yyyy'}, 400
+            users = User.query.all()
+            for user in users:
+                if user.uid == uid:
+                    user.update('','','',fdob)
             return f"{user.read()} Updated"
     
     class _Security(Resource):
