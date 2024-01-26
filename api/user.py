@@ -77,6 +77,7 @@ class UserAPI:
             body = request.get_json() # get the body of the request
             uid = body.get('uid') # get the UID (Know what to reference)
             dob = body.get('dob')
+            name = body.get('name')
             if dob is not None:
                 try:
                     fdob = datetime.strptime(dob, '%Y-%m-%d').date()
@@ -85,7 +86,7 @@ class UserAPI:
             users = User.query.all()
             for user in users:
                 if user.uid == uid:
-                    user.update('','','',fdob)
+                    user.update(name,'','',fdob)
             return f"{user.read()} Updated"
     
     class _Security(Resource):
