@@ -69,7 +69,14 @@ class UserAPI:
             user = user.query.get(uid)
             user.delete()
             return f"{user.read()} Has been deleted"
-
+        @token_required
+        def put(self):
+            body = request.get_json() # get the body of the request
+            uid = body.get('uid') # get the UID (Know what to reference)
+            data = body.get('data')
+            user = user.query.get(uid) # get the player (using the uid in this case)
+            user.update(data)
+            return f"{user.read()} Updated"
     
     class _Security(Resource):
         def post(self):
