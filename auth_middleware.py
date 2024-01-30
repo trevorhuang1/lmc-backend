@@ -13,7 +13,7 @@ def token_required(f):
                 "message": "Authentication Token is missing!",
                 "data": None,
                 "error": "Unauthorized"
-            }, 401
+            }, 403
         try:
             data=jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
             current_user=User.query.filter_by(_uid=data["_uid"]).first()
