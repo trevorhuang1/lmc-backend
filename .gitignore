@@ -6,3 +6,5 @@ Gemfile.lock
 __pycache__/
 *-checkpoint.ipynb
 .ipynb checkpoints
+*.pyc
+.pyc
