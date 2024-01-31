@@ -70,7 +70,7 @@ class UserAPI:
             for user in users:
                 if user.uid == uid:
                     user.delete()
-            return jsonify(users.read())
+            return jsonify(user.read())
         
         @token_required
         def put(self, current_user):
