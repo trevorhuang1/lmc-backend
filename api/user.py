@@ -31,10 +31,10 @@ class UserAPI:
             # look for password and dob
             password = body.get('password')
             dob = body.get('dob')
-
+            favoritefood = body.get('favoritefood')
             ''' #1: Key code block, setup USER OBJECT '''
             uo = User(name=name, 
-                      uid=uid)
+                      uid=uid, favoritefood=favoritefood)
             
             ''' Additional garbage error checking '''
             # set password if provided
@@ -46,7 +46,6 @@ class UserAPI:
                     uo.dob = datetime.strptime(dob, '%Y-%m-%d').date()
                 except:
                     return {'message': f'Date of birth format error {dob}, must be mm-dd-yyyy'}, 400
-            
             ''' #2: Key Code block to add user to database '''
             # create user in database
             user = uo.create()
@@ -78,6 +77,7 @@ class UserAPI:
             uid = body.get('uid') # get the UID (Know what to reference)
             dob = body.get('dob')
             name = body.get('name')
+            favoritefood = body.get('favoritefood')
             if dob is not None:
                 try:
                     fdob = datetime.strptime(dob, '%Y-%m-%d').date()
@@ -86,7 +86,7 @@ class UserAPI:
             users = User.query.all()
             for user in users:
                 if user.uid == uid:
-                    user.update(name,'','',fdob)
+                    user.update(name,'','',fdob,favoritefood)
             return f"{user.read()} Updated"
     
     class _Security(Resource):
