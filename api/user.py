@@ -6,6 +6,13 @@ from auth_middleware import token_required
 
 from model.users import User
 
+# Set CORS headers
+request.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:4100/lmc-frontend'
+request.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+request.headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type'
+request.headers['Access-Control-Allow-Credentials'] = 'true'
+request.headers['Access-Control-Expose-Headers'] = 'Content-Length'
+
 user_api = Blueprint('user_api', __name__,
                    url_prefix='/api/users')
 
@@ -18,7 +25,7 @@ class UserAPI:
         def post(self, current_user): # Create method
             ''' Read data for json body '''
             body = request.get_json()
-            
+
             ''' Avoid garbage in, error checking '''
             # validate name
             name = body.get('name')
