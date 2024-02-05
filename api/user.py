@@ -6,13 +6,6 @@ from auth_middleware import token_required
 
 from model.users import User
 
-# Set CORS headers
-request.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:4100/lmc-frontend'
-request.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
-request.headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type'
-request.headers['Access-Control-Allow-Credentials'] = 'true'
-request.headers['Access-Control-Expose-Headers'] = 'Content-Length'
-
 user_api = Blueprint('user_api', __name__,
                    url_prefix='/api/users')
 
@@ -25,7 +18,7 @@ class UserAPI:
         def post(self, current_user): # Create method
             ''' Read data for json body '''
             body = request.get_json()
-
+            
             ''' Avoid garbage in, error checking '''
             # validate name
             name = body.get('name')
@@ -59,6 +52,14 @@ class UserAPI:
             # success returns json of user
             if user:
                 return jsonify(user.read())
+            
+                response.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:4100/lmc-frontend/'
+                response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+                response.headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type'
+                response.headers['Access-Control-Allow-Credentials'] = 'true'
+                response.headers['Access-Control-Expose-Headers'] = 'Content-Length'
+
+                return response
             # failure returns error
             return {'message': f'Processed {name}, either a format error or User ID {uid} is duplicate'}, 400
 
@@ -106,6 +107,7 @@ class UserAPI:
                         "data": None,
                         "error": "Bad request"
                     }, 400
+                
                 ''' Get Data '''
                 uid = body.get('uid')
                 if uid is None:
@@ -155,7 +157,7 @@ class UserAPI:
                         "data": None
                 }, 500
 
-            
+
     # building RESTapi endpoint
     api.add_resource(_CRUD, '/')
     api.add_resource(_Security, '/authenticate')
