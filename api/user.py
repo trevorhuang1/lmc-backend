@@ -14,8 +14,7 @@ api = Api(user_api)
 
 class UserAPI:        
     class _CRUD(Resource):  # User API operation for Create, Read.  THe Update, Delete methods need to be implemeented
-        @token_required
-        def post(self, current_user): # Create method
+        def post(self): # Create method
             ''' Read data for json body '''
             body = request.get_json()
             
@@ -70,8 +69,8 @@ class UserAPI:
                 if user.uid == uid:
                     user.delete()
             return jsonify(user.read())
-        
-        @token_required(roles=["Admin"])
+
+        @token_required(roles=["Admin", "User"])
         def put(self, current_user):
             body = request.get_json() # get the body of the request
             uid = body.get('uid') # get the UID (Know what to reference)
