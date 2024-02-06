@@ -71,7 +71,7 @@ class UserAPI:
                     user.delete()
             return jsonify(user.read())
         
-        @token_required
+        @token_required(roles=["Admin"])
         def put(self, current_user):
             body = request.get_json() # get the body of the request
             uid = body.get('uid') # get the UID (Know what to reference)
