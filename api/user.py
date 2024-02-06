@@ -54,13 +54,13 @@ class UserAPI:
             # failure returns error
             return {'message': f'Processed {name}, either a format error or User ID {uid} is duplicate'}, 400
 
-        @token_required(roles=["Admin"])
+        @token_required(roles=["Admin","User"])
         def get(self, current_user): # Read Method
             users = User.query.all()    # read/extract all users from database
             json_ready = [user.read() for user in users]  # prepare output in json
             return jsonify(json_ready)  # jsonify creates Flask response object, more specific to APIs than json.dumps
         
-        @token_required
+        @token_required(roles=["Admin","User"])
         def delete(self, current_user):
             body = request.get_json()
             uid = body.get('uid')
@@ -70,7 +70,7 @@ class UserAPI:
                     user.delete()
             return jsonify(user.read())
 
-        @token_required(roles=["Admin", "User"])
+        @token_required(roles=["Admin"])
         def put(self, current_user):
             body = request.get_json() # get the body of the request
             uid = body.get('uid') # get the UID (Know what to reference)
