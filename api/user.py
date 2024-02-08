@@ -30,10 +30,10 @@ class UserAPI:
             # look for password and dob
             password = body.get('password')
             dob = body.get('dob')
-            favoritefood = body.get('favoritefood')
+            points = body.get('points')
             ''' #1: Key code block, setup USER OBJECT '''
             uo = User(name=name, 
-                      uid=uid, favoritefood=favoritefood)
+                      uid=uid, points=points)
             
             ''' Additional garbage error checking '''
             # set password if provided
@@ -76,7 +76,7 @@ class UserAPI:
             uid = body.get('uid') # get the UID (Know what to reference)
             dob = body.get('dob')
             name = body.get('name')
-            favoritefood = body.get('favoritefood')
+            points = body.get('points')
             if dob is not None:
                 try:
                     fdob = datetime.strptime(dob, '%Y-%m-%d').date()
@@ -85,7 +85,7 @@ class UserAPI:
             users = User.query.all()
             for user in users:
                 if user.uid == uid:
-                    user.update(name,'','',fdob,favoritefood)
+                    user.update(name,'','',fdob, points)
             return f"{user.read()} Updated"
     
     class _Security(Resource):
