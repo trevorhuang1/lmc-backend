@@ -54,7 +54,6 @@ elif [ -e "instance/volumes/sqlite.db" ]; then
     sqlite3 instance/volumes/sqlite.db ".backup ${backup_file}"
 fi
 
-
 # Perform database migrations
 python3 -m flask db migrate
 
