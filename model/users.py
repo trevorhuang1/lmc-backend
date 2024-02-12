@@ -75,7 +75,7 @@ class User(db.Model):
     _name = db.Column(db.String(255), unique=False, nullable=False)
     _uid = db.Column(db.String(255), unique=True, nullable=False)
     _password = db.Column(db.String(255), unique=False, nullable=False)
-    _items = db.Column(db.String(255), unique=True, nullable=False)
+    _items = db.Column(db.String(255), unique=False, nullable=False)
     _dob = db.Column(db.Date)
     _points = db.Column(db.Integer, unique=False, nullable=False)
     _role = db.Column(db.String(20), default="User", nullable=False)
@@ -244,7 +244,7 @@ def initUsers():
         """Create database and tables"""
         db.create_all()
         """Tester data for table"""
-        u1 = User(name='Thomas Edison', uid='toby', password='123toby', dob=date(1847, 2, 11), points=4883, role='Admin', items="penis")
+        u1 = User(name='Thomas Edison', uid='toby', password='123toby', dob=date(1847, 2, 11), points=4883, role='Admin')
         u2 = User(name='Nicholas Tesla', uid='niko', password='123niko', dob=date(1856, 7, 10), points=1000, role="User")
         u3 = User(name='Alexander Graham Bell', uid='lex', points=55, role="User")
         u4 = User(name='Grace Hopper', uid='hop', password='123hop', dob=date(1906, 12, 9), points=1, role="User")
