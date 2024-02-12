@@ -152,6 +152,8 @@ def initBakings():
             ["sugar", "butter"],
             ["sugar", "milk"]
         ]
+        for i in ingredients_list:
+            i.sort()
 
         baked_goods_list = [
             "cookie",
