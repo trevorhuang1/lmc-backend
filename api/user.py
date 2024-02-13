@@ -149,20 +149,17 @@ class UserAPI:
             
     class _Friends(Resource):
         @token_required
-        def patch(self, current_user):
+        def get(self, current_user):
             token = request.cookies.get("jwt")
             current_user = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])['_uid']
             users = User.query.all()
             for user in users:
                 if user.uid==current_user:
-                    data = {
-                        "friends": user.friends,
-                    }
-                    return jsonify(data)
+                    return jsonify(user.friends)
             
             
             
     # building RESTapi endpoint
     api.add_resource(_CRUD, '/')
     api.add_resource(_Security, '/authenticate')
-    api.add_resource(_Friends(Resource), '/friends')
+    api.add_resource(_Friends, '/friends')
