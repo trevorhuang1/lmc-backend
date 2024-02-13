@@ -75,7 +75,7 @@ class User(db.Model):
     _name = db.Column(db.String(255), unique=False, nullable=False)
     _uid = db.Column(db.String(255), unique=True, nullable=False)
     _password = db.Column(db.String(255), unique=False, nullable=False)
-    _items = db.Column(db.String(255), unique=True, nullable=False)
+    _items = db.Column(db.String(255), unique=False, nullable=False)
     _dob = db.Column(db.Date)
     _favoritefood = db.Column(db.String(255), unique=False, nullable=False)
     _role = db.Column(db.String(20), default="User", nullable=False)
