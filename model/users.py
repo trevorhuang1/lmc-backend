@@ -75,6 +75,7 @@ class User(db.Model):
     _name = db.Column(db.String(255), unique=False, nullable=False)
     _uid = db.Column(db.String(255), unique=True, nullable=False)
     _password = db.Column(db.String(255), unique=False, nullable=False)
+    _items = db.Column(db.String(255), unique=True, nullable=False)
     _dob = db.Column(db.Date)
     _favoritefood = db.Column(db.String(255), unique=False, nullable=False)
     _role = db.Column(db.String(20), default="User", nullable=False)
@@ -84,11 +85,12 @@ class User(db.Model):
     posts = db.relationship("Post", cascade='all, delete', backref='users', lazy=True)
 
     # constructor of a User object, initializes the instance variables within object (self)
-    def __init__(self, name, uid, friends, password="123qwerty", dob=date.today(), favoritefood='guac', role="User"):
+    def __init__(self, name, uid, items='', password="123qwerty", dob=date.today(), favoritefood='guac', role="User"):
         self._name = name    # variables with self prefix become part of the object, 
         self._uid = uid
         self._friends = friends
         self.set_password(password)
+        self._items = items
         self._dob = dob
         self._favoritefood = favoritefood
         self._role = role
@@ -109,6 +111,15 @@ class User(db.Model):
     @role.setter
     def role(self, role):
         self._role = role
+    
+    @property
+    def items(self):
+        return self.items
+
+    # inventory of items
+    @role.setter
+    def items(self, items):
+        self._role = items
 
     # a name getter method, extracts name from object
     @property
@@ -206,12 +217,13 @@ class User(db.Model):
             "age": self.age,
             "posts": [post.read() for post in self.posts],
             "favoritefood": self.favoritefood,
-            "role": self.role
+            "role": self.role,
+            "items": self.items
         }
 
     # CRUD update: updates user name, password, phone
     # returns self
-    def update(self, name="", uid="", password="", dob='', favoritefood=''):
+    def update(self, name="", uid="", password="", dob='', favoritefood='', items=''):
         """only updates values with length"""
         if len(name) > 0:
             self.name = name
@@ -223,6 +235,8 @@ class User(db.Model):
             self.dob = dob
         if len(favoritefood) > 0:
             self.favoritefood = favoritefood
+        if len(items)>0:
+            self.items = items
         db.session.commit()
         return self
 
@@ -242,10 +256,10 @@ def initUsers():
         """Create database and tables"""
         db.create_all()
         """Tester data for table"""
-        u1 = User(name='Thomas Edison', uid='toby', friends='niko', password='123toby', dob=date(1847, 2, 11), role='Admin')
-        u2 = User(name='Nicholas Tesla', uid='niko', friends='toby', password='123niko', dob=date(1856, 7, 10), role="User")
-        u3 = User(name='Alexander Graham Bell', uid='lex', friends='toby', role="User")
-        u4 = User(name='Grace Hopper', uid='hop', friends='toby', password='123hop', dob=date(1906, 12, 9), role="User")
+        u1 = User(name='Thomas Edison', uid='toby', password='123toby', dob=date(1847, 2, 11), role='Admin', items="penis")
+        u2 = User(name='Nicholas Tesla', uid='niko', password='123niko', dob=date(1856, 7, 10), role="User")
+        u3 = User(name='Alexander Graham Bell', uid='lex', role="User")
+        u4 = User(name='Grace Hopper', uid='hop', password='123hop', dob=date(1906, 12, 9), role="User")
         users = [u1, u2, u3, u4]
 
         """Builds sample user/note(s) data"""
