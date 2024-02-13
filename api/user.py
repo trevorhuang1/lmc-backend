@@ -148,13 +148,11 @@ class UserAPI:
                 }, 500
             
     class _Friends(Resource):
-        @token_required
-        def get(self, current_user):
-            token = request.cookies.get("jwt")
-            current_user = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])['_uid']
+        def get(self):
+            body = request.get_json()
             users = User.query.all()
             for user in users:
-                if user.uid==current_user:
+                if user.uid == body.get("uid"):
                     return jsonify(user.friends)
             
             

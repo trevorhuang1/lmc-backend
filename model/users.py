@@ -85,7 +85,7 @@ class User(db.Model):
     posts = db.relationship("Post", cascade='all, delete', backref='users', lazy=True)
 
     # constructor of a User object, initializes the instance variables within object (self)
-    def __init__(self, name, uid, items='', password="123qwerty", dob=date.today(), favoritefood='guac', role="User"):
+    def __init__(self, name, uid, friends, items='', password="123qwerty", dob=date.today(), favoritefood='guac', role="User"):
         self._name = name    # variables with self prefix become part of the object, 
         self._uid = uid
         self._friends = friends
@@ -256,10 +256,10 @@ def initUsers():
         """Create database and tables"""
         db.create_all()
         """Tester data for table"""
-        u1 = User(name='Thomas Edison', uid='toby', password='123toby', dob=date(1847, 2, 11), role='Admin', items="penis")
-        u2 = User(name='Nicholas Tesla', uid='niko', password='123niko', dob=date(1856, 7, 10), role="User")
-        u3 = User(name='Alexander Graham Bell', uid='lex', role="User")
-        u4 = User(name='Grace Hopper', uid='hop', password='123hop', dob=date(1906, 12, 9), role="User")
+        u1 = User(name='Thomas Edison', uid='toby', friends=['niko', 'lex', 'hop'], password='123toby', dob=date(1847, 2, 11), role='Admin', items='tester')
+        u2 = User(name='Nicholas Tesla', uid='niko', friends=['toby'], password='123niko', dob=date(1856, 7, 10), role="User", items='tester')
+        u3 = User(name='Alexander Graham Bell', uid='lex', friends=['hop'], password='123niko', dob=date(1856, 7, 10), role="User", items='tester')
+        u4 = User(name='Grace Hopper', uid='hop', friends=['lex'], password='123hop', dob=date(1906, 12, 9), role="User", items='tester')
         users = [u1, u2, u3, u4]
 
         """Builds sample user/note(s) data"""
