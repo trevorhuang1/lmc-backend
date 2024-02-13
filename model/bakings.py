@@ -128,7 +128,7 @@ def initBakings():
             ["butter", "butter", "flour", "egg"],
             ["butter", "egg", "custard", "flour"],
             ["flour", "glaze", "egg", "sugar"],
-            ["flour", "egg", "sugar", "glaze"],
+            ["flour", "egg", "sugar", "love"],
             ["flour", "flour", "butter", "yeast"],
             ["banana", "bread"],
             ["cocoa", "bread"],

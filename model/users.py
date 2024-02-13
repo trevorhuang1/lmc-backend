@@ -224,10 +224,9 @@ class User(db.Model):
 
     # CRUD update: updates user name, password, phone
     # returns self
-    def update(self, name="", uid="", password="", dob='', favoritefood='', items=''):
+    def update(self, uid="", password="", dob='', favoritefood='', items=''):
         """only updates values with length"""
-        if len(name) > 0:
-            self.name = name
+        temp = []
         if len(uid) > 0:
             self.uid = uid
         if len(password) > 0:
@@ -237,7 +236,23 @@ class User(db.Model):
         if len(favoritefood) > 0:
             self.favoritefood = favoritefood
         if len(items)>0:
-            self.items = items
+            users = User.query.all()
+            for user in users:
+                print(uid)
+                if user.uid == uid:
+                    print(user.items, "user.items")
+                    temp = json.loads(user.items)
+                    print(items)
+                    print(temp, "temp0")
+                    temp.append(json.loads(items)[-1])
+                    print(json.loads(items)[-1], "als;kdfjds")
+                    print(temp, "temp")
+                    sets = set(temp)
+                    temp2 = []
+                    for i in sets:
+                        temp2.append(i)
+                    self.items = json.dumps(temp2)
+            
         db.session.commit()
         return self
 
