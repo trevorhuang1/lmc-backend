@@ -104,12 +104,12 @@ class User(db.Model):
     
     @property
     def items(self):
-        return self.items
+        return self._items
 
     # inventory of items
-    @role.setter
+    @items.setter
     def items(self, items):
-        self._role = items
+        self._items = items
 
     # a name getter method, extracts name from object
     @property
@@ -212,10 +212,9 @@ class User(db.Model):
 
     # CRUD update: updates user name, password, phone
     # returns self
-    def update(self, name="", uid="", password="", dob='', favoritefood='', items=''):
+    def update(self, uid="", password="", dob='', favoritefood='', items=''):
         """only updates values with length"""
-        if len(name) > 0:
-            self.name = name
+        temp = []
         if len(uid) > 0:
             self.uid = uid
         if len(password) > 0:
@@ -225,7 +224,23 @@ class User(db.Model):
         if len(favoritefood) > 0:
             self.favoritefood = favoritefood
         if len(items)>0:
-            self.items = items
+            users = User.query.all()
+            for user in users:
+                print(uid)
+                if user.uid == uid:
+                    print(user.items, "user.items")
+                    temp = json.loads(user.items)
+                    print(items)
+                    print(temp, "temp0")
+                    temp.append(json.loads(items)[-1])
+                    print(json.loads(items)[-1], "als;kdfjds")
+                    print(temp, "temp")
+                    sets = set(temp)
+                    temp2 = []
+                    for i in sets:
+                        temp2.append(i)
+                    self.items = json.dumps(temp2)
+            
         db.session.commit()
         return self
 
@@ -246,10 +261,10 @@ def initUsers():
         """Create database and tables"""
         db.create_all()
         """Tester data for table"""
-        u1 = User(name='Thomas Edison', uid='toby', password='123toby', dob=date(1847, 2, 11), role='Admin', items="penis")
-        u2 = User(name='Nicholas Tesla', uid='niko', password='123niko', dob=date(1856, 7, 10), role="User")
-        u3 = User(name='Alexander Graham Bell', uid='lex', role="User")
-        u4 = User(name='Grace Hopper', uid='hop', password='123hop', dob=date(1906, 12, 9), role="User")
+        u1 = User(name='Thomas Edison', uid='toby', password='123toby', dob=date(1847, 2, 11), role='Admin', items=json.dumps(["egg","flour","sugar"]))
+        u2 = User(name='Nicholas Tesla', uid='niko', password='123niko', dob=date(1856, 7, 10), role="User", items=json.dumps(["egg","flour","sugar"]))
+        u3 = User(name='Alexander Graham Bell', uid='lex', password="123alex", dob=date(2002,1,1), role="User", items=json.dumps(["egg","flour","sugar"]))
+        u4 = User(name='Grace Hopper', uid='hop', password='123hop', dob=date(1906, 12, 9), role="User", items=json.dumps(["egg","flour","sugar"]))
         users = [u1, u2, u3, u4]
 
         """Builds sample user/note(s) data"""
