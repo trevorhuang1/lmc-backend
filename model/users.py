@@ -114,12 +114,12 @@ class User(db.Model):
     
     @property
     def items(self):
-        return self.items
+        return self._items
 
     # inventory of items
-    @role.setter
+    @items.setter
     def items(self, items):
-        self._role = items
+        self._items = items
 
     # a name getter method, extracts name from object
     @property
