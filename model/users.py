@@ -270,8 +270,7 @@ class User(db.Model):
                     for i in sets:
                         temp2.append(i)
                     self.items = json.dumps(temp2)
-        if len(points) > 0:
-            self.points = points
+        self.points = points
         db.session.commit()
         return self
 
