@@ -95,7 +95,7 @@ class User(db.Model):
 
     @property
     def friends(self):
-        return self.friends
+        return self._friends
     
     @friends.setter
     def role(self, friends):
@@ -232,7 +232,9 @@ class User(db.Model):
         db.session.delete(self)
         db.session.commit()
         return None
-
+    
+    def friendList(self):
+        
 
 """Database Creation and Testing """
 
