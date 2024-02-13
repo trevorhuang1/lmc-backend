@@ -79,19 +79,29 @@ class User(db.Model):
     _dob = db.Column(db.Date)
     _favoritefood = db.Column(db.String(255), unique=False, nullable=False)
     _role = db.Column(db.String(20), default="User", nullable=False)
+    _friends = db.Column(db.String(20), unique=False, nullable=False)
     
     # Defines a relationship between User record and Notes table, one-to-many (one user to many notes)
     posts = db.relationship("Post", cascade='all, delete', backref='users', lazy=True)
 
     # constructor of a User object, initializes the instance variables within object (self)
-    def __init__(self, name, uid, items='', password="123qwerty", dob=date.today(), favoritefood='guac', role="User"):
+    def __init__(self, name, uid, friends, items='', password="123qwerty", dob=date.today(), favoritefood='guac', role="User"):
         self._name = name    # variables with self prefix become part of the object, 
         self._uid = uid
+        self._friends = friends
         self.set_password(password)
         self._items = items
         self._dob = dob
         self._favoritefood = favoritefood
         self._role = role
+
+    @property
+    def friends(self):
+        return self._friends
+    
+    @friends.setter
+    def role(self, friends):
+        self._friends = friends
 
     # role setter property
     @property
@@ -202,12 +212,14 @@ class User(db.Model):
             "id": self.id,
             "name": self.name,
             "uid": self.uid,
+            "friends": self.friends,
+            "items": self.items,
             "dob": self.dob,
             "age": self.age,
             "posts": [post.read() for post in self.posts],
             "favoritefood": self.favoritefood,
             "role": self.role,
-            "items": self.items
+            
         }
 
     # CRUD update: updates user name, password, phone
@@ -249,8 +261,7 @@ class User(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
-        return None
-
+        return None       
 
 """Database Creation and Testing """
 
@@ -261,10 +272,10 @@ def initUsers():
         """Create database and tables"""
         db.create_all()
         """Tester data for table"""
-        u1 = User(name='Thomas Edison', uid='toby', password='123toby', dob=date(1847, 2, 11), role='Admin', items=json.dumps(["egg","flour","sugar"]))
-        u2 = User(name='Nicholas Tesla', uid='niko', password='123niko', dob=date(1856, 7, 10), role="User", items=json.dumps(["egg","flour","sugar"]))
-        u3 = User(name='Alexander Graham Bell', uid='lex', password="123alex", dob=date(2002,1,1), role="User", items=json.dumps(["egg","flour","sugar"]))
-        u4 = User(name='Grace Hopper', uid='hop', password='123hop', dob=date(1906, 12, 9), role="User", items=json.dumps(["egg","flour","sugar"]))
+        u1 = User(name='Thomas Edison', uid='toby', friends=json.dumps(["niko", "lex", "hop"]), password='123toby', dob=date(1847, 2, 11), role='Admin', items=json.dumps(["egg","flour","sugar"]))
+        u2 = User(name='Nicholas Tesla', uid='niko', friends=json.dumps(["toby", "lex", "hop"]), password='123niko', dob=date(1856, 7, 10), role="User", items=json.dumps(["egg","flour","sugar"]))
+        u3 = User(name='Alexander Graham Bell', uid='lex', friends=json.dumps(["niko", "toby", "hop"]), password='123niko', dob=date(1856, 7, 10), role="User", items=json.dumps(["egg","flour","sugar"]))
+        u4 = User(name='Grace Hopper', uid='hop', friends=json.dumps(["niko", "lex", "toby"]), password='123hop', dob=date(1906, 12, 9), role="User", items=json.dumps(["egg","flour","sugar"]))
         users = [u1, u2, u3, u4]
 
         """Builds sample user/note(s) data"""

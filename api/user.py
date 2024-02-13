@@ -146,8 +146,18 @@ class UserAPI:
                         "error": str(e),
                         "data": None
                 }, 500
-
+            
+    class _Friends(Resource):
+        def get(self):
+            body = request.get_json()
+            users = User.query.all()
+            for user in users:
+                if user.uid == body.get("uid"):
+                    return jsonify(user.friends)
+            
+            
             
     # building RESTapi endpoint
     api.add_resource(_CRUD, '/')
     api.add_resource(_Security, '/authenticate')
+    api.add_resource(_Friends, '/friends')
