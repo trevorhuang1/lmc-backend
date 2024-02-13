@@ -228,11 +228,18 @@ class User(db.Model):
             for user in users:
                 print(uid)
                 if user.uid == uid:
-                    
+                    print(user.items, "user.items")
                     temp = json.loads(user.items)
-                    temp = items
-                    
-            self.items = json.dumps(temp)
+                    print(items)
+                    print(temp, "temp0")
+                    temp.append(json.loads(items)[-1])
+                    print(json.loads(items)[-1], "als;kdfjds")
+                    print(temp, "temp")
+                    sets = set(temp)
+                    temp2 = []
+                    for i in sets:
+                        temp2.append(i)
+                    self.items = json.dumps(temp2)
             
         db.session.commit()
         return self
