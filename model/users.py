@@ -75,7 +75,7 @@ class User(db.Model):
     _name = db.Column(db.String(255), unique=False, nullable=False)
     _uid = db.Column(db.String(255), unique=True, nullable=False)
     _password = db.Column(db.String(255), unique=False, nullable=False)
-    _items = db.Column(db.String(255), unique=True, nullable=False)
+    _items = db.Column(db.String(255), unique=False, nullable=False)
     _dob = db.Column(db.Date)
     _favoritefood = db.Column(db.String(255), unique=False, nullable=False)
     _role = db.Column(db.String(20), default="User", nullable=False)
@@ -213,12 +213,13 @@ class User(db.Model):
             "name": self.name,
             "uid": self.uid,
             "friends": self.friends,
+            "items": self.items,
             "dob": self.dob,
             "age": self.age,
             "posts": [post.read() for post in self.posts],
             "favoritefood": self.favoritefood,
             "role": self.role,
-            "items": self.items
+            
         }
 
     # CRUD update: updates user name, password, phone
@@ -256,10 +257,10 @@ def initUsers():
         """Create database and tables"""
         db.create_all()
         """Tester data for table"""
-        u1 = User(name='Thomas Edison', uid='toby', friends=['niko', 'lex', 'hop'], password='123toby', dob=date(1847, 2, 11), role='Admin', items='tester')
-        u2 = User(name='Nicholas Tesla', uid='niko', friends=['toby'], password='123niko', dob=date(1856, 7, 10), role="User", items='tester')
-        u3 = User(name='Alexander Graham Bell', uid='lex', friends=['hop'], password='123niko', dob=date(1856, 7, 10), role="User", items='tester')
-        u4 = User(name='Grace Hopper', uid='hop', friends=['lex'], password='123hop', dob=date(1906, 12, 9), role="User", items='tester')
+        u1 = User(name='Thomas Edison', uid='toby', friends='niko', password='123toby', items='tester', dob=date(1847, 2, 11), role='Admin')
+        u2 = User(name='Nicholas Tesla', uid='niko', friends='toby', password='123niko', items='tester', dob=date(1856, 7, 10), role="User")
+        u3 = User(name='Alexander Graham Bell', uid='lex', friends='hop', password='123niko', items='tester', dob=date(1856, 7, 10), role="User")
+        u4 = User(name='Grace Hopper', uid='hop', friends='lex', password='123hop', items='tester', dob=date(1906, 12, 9), role="User")
         users = [u1, u2, u3, u4]
 
         """Builds sample user/note(s) data"""
