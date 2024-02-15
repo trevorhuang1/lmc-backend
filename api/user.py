@@ -152,13 +152,15 @@ class UserAPI:
         def post(self):
             body = request.get_json()
             uid = body.get('uid')
-            item = body.get('uid')
+            item = body.get('items')
             users = User.query.all()
             for user in users:
                 if user.uid == uid:
-                    user.items = user.items + item
+                    user.items = json.loads(user.items)
+                    user.items.append(item)
+                    user.items = json.dumps(user.items)
                     db.session.commit() 
-                    return(f"you just gave {user.read()} an item")
+                    return(f"you just gave {user.name} an item")
 
     
     # building RESTapi endpoint
