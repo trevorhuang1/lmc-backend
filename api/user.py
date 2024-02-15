@@ -4,7 +4,7 @@ from flask_restful import Api, Resource # used for REST API building
 from datetime import datetime
 from auth_middleware import token_required
 
-from model.users import User
+from model.users import User, db
 
 user_api = Blueprint('user_api', __name__,
                    url_prefix='/api/users')
@@ -147,18 +147,21 @@ class UserAPI:
                         "error": str(e),
                         "data": None
                 }, 500
-            
-    class _Friends(Resource):
-        def get(self):
+    
+    class _Send(Resource):
+        def post(self):
             body = request.get_json()
+            uid = body.get('uid')
+            item = body.get('uid')
             users = User.query.all()
             for user in users:
-                if user.uid == body.get("uid"):
-                    return jsonify(user.friends)
-            
-            
-            
+                if user.uid == uid:
+                    user.items = user.items + item
+                    db.session.commit() 
+                    return(f"you just gave {user.read()} an item")
+
+    
     # building RESTapi endpoint
     api.add_resource(_CRUD, '/')
     api.add_resource(_Security, '/authenticate')
-    api.add_resource(_Friends, '/friends')
+    api.add_resource(_Send, '/send')
