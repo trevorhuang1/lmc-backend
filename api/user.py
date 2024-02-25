@@ -162,6 +162,11 @@ class UserAPI:
                     db.session.commit() 
                     return(f"you just gave {user.name} an item")
 
+    class _Friendrq:
+        def post(self):
+            body = request.get_json()
+            sender = body.get('uid')
+            receiver = body.get('receiver')
     
     # building RESTapi endpoint
     api.add_resource(_CRUD, '/')
