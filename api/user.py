@@ -173,10 +173,36 @@ class UserAPI:
             for user in users:
                 if user.uid == receiver:
                     user.friendrq = json.loads(user.friendrq)
+                    if sender in user.friendrq:
+                        return "Friend request already sent", 400
+                    if sender in user.friends:
+                        return "Already friends", 400
                     user.friendrq.append(sender)
                     user.friendrq = json.dumps(user.friendrq)
                     db.session.commit() 
                     return(f"You sent a friend request to {user.name}")
+        def delete(self):
+            body = request.get_json()
+            action = body.get('action')
+            sender = body.get('sender')
+            receiver = body.get('receiver')
+            users = User.query.all()
+            for user in users:
+                if user.uid == receiver:
+                    user.friendrq = user.friendrq = json.loads(user.friendrq)
+                    if sender not in user.friendrq:
+                        return "Sender is not in the friend request list", 400
+                    user.friendrq.remove(sender)
+                    user.friendrq = json.dumps(user.friendrq)
+                    db.session.commit()
+                    if action == "accepted":
+                        user.friends = json.loads(user.friends)
+                        user.friends.append(sender)
+                        user.friends = json.dumps(user.friends)
+                        db.session.commit()
+                        return(f"You accepted {sender}'s friend request")
+                    else:
+                        return(f"You denied {sender}'s friend request")
     
     # building RESTapi endpoint
     api.add_resource(_CRUD, '/')
