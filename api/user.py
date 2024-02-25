@@ -162,13 +162,24 @@ class UserAPI:
                     db.session.commit() 
                     return(f"you just gave {user.name} an item")
 
-    class _Friendrq:
+    class _Friendrq(Resource):
         def post(self):
             body = request.get_json()
-            sender = body.get('uid')
+            users = User.query.all()
+            sender = body.get('sender')
             receiver = body.get('receiver')
+            if sender == receiver:
+                return {"message": "Cannot send friend request to yourself"}, 400
+            for user in users:
+                if user.uid == receiver:
+                    user.friendrq = json.loads(user.friendrq)
+                    user.friendrq.append(sender)
+                    user.friendrq = json.dumps(user.friendrq)
+                    db.session.commit() 
+                    return(f"You sent a friend request to {user.name}")
     
     # building RESTapi endpoint
     api.add_resource(_CRUD, '/')
     api.add_resource(_Security, '/authenticate')
     api.add_resource(_Send, '/send')
+    api.add_resource(_Friendrq, '/friendrq')
