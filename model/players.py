@@ -19,14 +19,14 @@ class Player(db.Model):
     _name = db.Column(db.String(255), unique=False, nullable=False)
     _uid = db.Column(db.String(255), unique=True, nullable=False)
     _password = db.Column(db.String(255), unique=False, nullable=False)
-    _tokens = db.Column(db.Integer)    
+    _points = db.Column(db.Integer)    
 
     # constructor of a Player object, initializes the instance variables within object (self)
-    def __init__(self, name, uid, tokens, password="123qwerty"):
+    def __init__(self, name, uid, points, password="123qwerty"):
         self._name = name    # variables with self prefix become part of the object, 
         self._uid = uid
         self.set_password(password)
-        self._tokens = tokens
+        self._points = points
 
     # a name getter method, extracts name from object
     @property
@@ -69,13 +69,13 @@ class Player(db.Model):
     
     # dob property is returned as string, to avoid unfriendly outcomes
     @property
-    def tokens(self):
-        return self._tokens
+    def points(self):
+        return self._points
     
     # dob should be have verification for type date
-    @tokens.setter
-    def tokens(self, tokens):
-        self._tokens = tokens
+    @points.setter
+    def points(self, points):
+        self._points = points
     
     
     # output content using str(object) in human readable form, uses getter
@@ -102,11 +102,11 @@ class Player(db.Model):
             "id": self.id,
             "name": self.name,
             "uid": self.uid,
-            "tokens": self.tokens,
+            "points": self.points,
             "password": self._password
         }
 
-    # CRUD update: updates name, uid, password, tokens
+    # CRUD update: updates name, uid, password, points
     # returns self
     def update(self, dictionary):
         """only updates values in dictionary with length"""
@@ -117,8 +117,8 @@ class Player(db.Model):
                 self.uid = dictionary[key]
             if key == "password":
                 self.set_password(dictionary[key])
-            if key == "tokens":
-                self.tokens = dictionary[key]
+            if key == "points":
+                self.points = dictionary[key]
         db.session.commit()
         return self
 
@@ -141,11 +141,11 @@ def initPlayers():
         db.create_all()
         """Tester records for table"""
         players = [
-            Player(name='Azeem Khan', uid='azeemK', tokens=45),
-            Player(name='Ahad Biabani', uid='ahadB', tokens=41),
-            Player(name='Akshat Parikh', uid='akshatP', tokens=40),
-            Player(name='Josh Williams', uid='joshW', tokens=38),
-            Player(name='John Mortensen', uid='johnM', tokens=35)
+            Player(name='Azeem Khan', uid='azeemK', points=45),
+            Player(name='Ahad Biabani', uid='ahadB', points=41),
+            Player(name='Akshat Parikh', uid='akshatP', points=40),
+            Player(name='Josh Williams', uid='joshW', points=38),
+            Player(name='John Mortensen', uid='johnM', points=35)
         ]
 
         """Builds sample user/note(s) data"""

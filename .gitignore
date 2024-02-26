@@ -5,6 +5,6 @@ nohup.out
 Gemfile.lock
 __pycache__/
 *-checkpoint.ipynb
-.ipynb checktokens
+.ipynb checkpoints
 *.pyc
 __pycache__/.pyc

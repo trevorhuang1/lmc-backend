@@ -44,7 +44,7 @@ Run the Python server from the command line
 
 ## Idea
 
-> The purpose of project is to serve APIs.  It is the backend piece of a Full-Stack project.  Review `api` folder in project for endtokens.
+> The purpose of project is to serve APIs.  It is the backend piece of a Full-Stack project.  Review `api` folder in project for endpoints.
 
 ### Hacks
 > Change the starter code to be your own.

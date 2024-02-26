@@ -77,7 +77,7 @@ class UserAPI:
             dob = body.get('dob')
             items = body.get('items')
             favoritefood = body.get('favoritefood')
-            tokens = body.get('tokens')
+            points = body.get('points')
             if dob is not None:
                 try:
                     fdob = datetime.strptime(dob, '%Y-%m-%d').date()
@@ -86,7 +86,7 @@ class UserAPI:
             users = User.query.all()
             for user in users:
                 if user.uid == uid:
-                    user.update(uid,'','', '', items, tokens)
+                    user.update(uid,'','', '', items, points)
             return f"{user.read()} Updated"
     
     class _Security(Resource):
