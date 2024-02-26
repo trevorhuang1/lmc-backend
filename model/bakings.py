@@ -24,14 +24,14 @@ class Baking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     _recpie = db.Column(db.String(255), unique = False, nullable = False)
     _name = db.Column(db.String(255), unique = True, nullable = False)
-    _points = db.Column(db.Integer, unique = False, nullable = True)
+    _tokens = db.Column(db.Integer, unique = False, nullable = True)
     
 
     # constructor of a User object, initializes the instance variables within object (self)
-    def __init__(self, recpie="", name = "", points = 0):   # variables with self prefix become part of the object, 
+    def __init__(self, recpie="", name = "", tokens = 0):   # variables with self prefix become part of the object, 
         self._recpie = recpie
         self._name = name
-        self._points = points
+        self._tokens = tokens
 
     @property
     def recpie(self):
@@ -52,13 +52,13 @@ class Baking(db.Model):
         self._name = name
 
     @property
-    def points(self):
-        return self._points
+    def tokens(self):
+        return self._tokens
     
     # a setter function, allows name to be updated after initial object creation
-    @points.setter
-    def points(self, points):
-        self._points = points
+    @tokens.setter
+    def tokens(self, tokens):
+        self._tokens = tokens
     
     # output content using str(object) in human readable form, uses getter
     # output content using json dumps, this is ready for API response
@@ -83,7 +83,7 @@ class Baking(db.Model):
         return {
             "recpie": self.recpie,
             "name": self.name,
-            "points": self.points
+            "tokens": self.tokens
         }
 
     # # CRUD update: updates user name, password, phone
@@ -187,13 +187,13 @@ def initBakings():
             "frosting",
             "glaze"
         ]
-        points_list = [4, 2, 2, 2, 4, 4, 4, 4, 4, 2, 2, 3, 2, 4, 4, 4, 2, 3, 2, 3, 3, 3, 3, 4, 2, 2, 2, 3, 2, 2]
+        tokens_list = [4, 2, 2, 2, 4, 4, 4, 4, 4, 2, 2, 3, 2, 4, 4, 4, 2, 3, 2, 3, 3, 3, 3, 4, 2, 2, 2, 3, 2, 2]
 
         # b1 = Baking(recpie=json.dumps(ingredients_list[0]))
         # bakings = [b1]
         bakings = []
         for i in range(len(ingredients_list)):
-            temp = Baking(recpie=json.dumps(ingredients_list[i]), name=baked_goods_list[i], points=points_list[i])
+            temp = Baking(recpie=json.dumps(ingredients_list[i]), name=baked_goods_list[i], tokens=tokens_list[i])
             bakings.append(temp)
         """Builds sample user/note(s) data"""
         for baking in bakings:
