@@ -287,7 +287,17 @@ class User(db.Model):
 """Database Creation and Testing """
 
 
-
+# Builds working data for testing
+def initUsers():
+    with app.app_context():
+        """Create database and tables"""
+        db.create_all()
+        """Tester data for table"""
+        u1 = User(name='Thomas Edison', uid='toby', friends=json.dumps(["niko", "lex"]), friendrq=json.dumps(["hop"]), password='123toby', dob=date(1847, 2, 11), role='Admin', items=json.dumps(["egg","flour","sugar"]), points=100)
+        u2 = User(name='Nicholas Tesla', uid='niko', friends=json.dumps(["toby", "lex"]), friendrq=json.dumps(["hop"]), password='123niko', dob=date(1856, 7, 10), role="User", items=json.dumps(["egg","flour","sugar"]), points=50)
+        u3 = User(name='Alexander Graham Bell', uid='lex', friends=json.dumps(["niko", "toby"]), friendrq=json.dumps(["hop"]), password='123niko', dob=date(1856, 7, 10), role="User", items=json.dumps(["egg","flour","sugar"]), points=25)
+        u4 = User(name='Grace Hopper', uid='hop', friends=json.dumps(["niko", "lex"]), friendrq=json.dumps(["toby"]), password='123hop', dob=date(1906, 12, 9), role="User", items=json.dumps(["egg","flour","sugar"]), points=0)
+        users = [u1, u2, u3, u4]
 
         """Builds sample user/note(s) data"""
         for user in users:
