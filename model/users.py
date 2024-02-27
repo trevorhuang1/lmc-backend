@@ -297,7 +297,8 @@ def initUsers():
         u2 = User(name='Nicholas Tesla', uid='niko', friends=json.dumps(["toby", "lex"]), friendrq=json.dumps(["hop"]), password='123niko', dob=date(1856, 7, 10), role="User", items=json.dumps(["egg","flour","sugar"]), points=50)
         u3 = User(name='Alexander Graham Bell', uid='lex', friends=json.dumps(["niko", "toby"]), friendrq=json.dumps(["hop"]), password='123niko', dob=date(1856, 7, 10), role="User", items=json.dumps(["egg","flour","sugar"]), points=25)
         u4 = User(name='Grace Hopper', uid='hop', friends=json.dumps(["niko", "lex"]), friendrq=json.dumps(["toby"]), password='123hop', dob=date(1906, 12, 9), role="User", items=json.dumps(["egg","flour","sugar"]), points=0)
-        users = [u1, u2, u3, u4]
+        u5 = User(name='Tester', uid='test', friends=json.dumps(["lex"]), friendrq=json.dumps(["niko"]), password='tester', dob=date(1906, 12, 2), role="User", items=json.dumps(["egg","flour","sugar"]), points=0)
+        users = [u1, u2, u3, u4, u5]
 
         """Builds sample user/note(s) data"""
         for user in users:
