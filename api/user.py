@@ -203,6 +203,11 @@ class UserAPI:
                         return(f"You accepted {sender}'s friend request")
                     else:
                         return(f"You denied {sender}'s friend request")
+                if user.uid == sender:
+                    user.friends = json.loads(user.friends)
+                    user.friends.append(receiver)
+                    user.friends = json.dumps(user.friends)
+                    db.session.commit()
     
     # building RESTapi endpoint
     api.add_resource(_CRUD, '/')
