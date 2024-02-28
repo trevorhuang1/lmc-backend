@@ -1,9 +1,9 @@
 import threading
 
 # import "packages" from flask
-from flask import render_template,request  # import render_template from "public" flask libraries
+from flask import Flask,render_template,request  # import render_template from "public" flask libraries
 from flask.cli import AppGroup
-
+from flask_cors import CORS
 
 # import "packages" from "this" project
 from __init__ import app, db, cors  # Definitions initialization
@@ -21,6 +21,9 @@ from model.bakings import initBakings
 # setup App pages
 from projects.projects import app_projects # Blueprint directory import projects definition
 
+app = Flask(__name__)
+app.debug = True
+CORS(app, supports_credentials=True, origins="*")
 
 # Initialize the SQLAlchemy object to work with the Flask app instance
 db.init_app(app)
