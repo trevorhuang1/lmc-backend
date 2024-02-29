@@ -21,10 +21,6 @@ from model.bakings import initBakings
 # setup App pages
 from projects.projects import app_projects # Blueprint directory import projects definition
 
-app = Flask(__name__)
-app.debug = True
-CORS(app, supports_credentials=True, origins="*")
-
 # Initialize the SQLAlchemy object to work with the Flask app instance
 db.init_app(app)
 
