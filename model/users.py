@@ -87,7 +87,7 @@ class User(db.Model):
     posts = db.relationship("Post", cascade='all, delete', backref='users', lazy=True)
 
     # constructor of a User object, initializes the instance variables within object (self)
-    def __init__(self, name, uid, items='', password="123qwerty", dob=date.today(), favoritefood='guac', role="User", points = 0, friends='', friendrq=''):
+    def __init__(self, name, uid, items="[]", password="123qwerty", dob=date.today(), favoritefood='guac', role="User", points = 0, friends='', friendrq=''):
         self._name = name    # variables with self prefix become part of the object, 
         self._uid = uid
         self._friends = friends
